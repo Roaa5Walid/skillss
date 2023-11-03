@@ -4,6 +4,7 @@ import 'package:skillss/bages/jobs/tt.dart';
 import 'package:skillss/bages/jobs/view.dart';
 import 'package:skillss/spla/view.dart';
 
+import 'bages/bottonNevegation/view.dart';
 import 'bages/signup/view.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:Jobs(),
+      home:MainNav(),
     );
   }
 }
