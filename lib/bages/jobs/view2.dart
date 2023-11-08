@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:skillss/bages/jobs/view.dart';
 import 'package:skillss/bages/jobs/view2.dart';
 import 'package:skillss/dataa.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,12 +22,12 @@ class JobType {
 
   JobType({required this.id, required this.name});
 }
-class Jobs extends StatefulWidget {
+class Jobs2 extends StatefulWidget {
   @override
-  _JobsState createState() => _JobsState();
+  _Jobs2State createState() => _Jobs2State();
 }
 
-class _JobsState extends State<Jobs> {
+class _Jobs2State extends State<Jobs2> {
   List<int>items_per_page=[];
   List<int>idd=[];
   List<int>id=[];
@@ -50,7 +51,7 @@ class _JobsState extends State<Jobs> {
   //List<String> status = [];
 
   Future<void> getData() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/jobs/api");
+    var url = Uri.parse("https://skills.pythonanywhere.com/jobs/api?ctype=جميع الوظائف&page=2");
     Response response = await get(url);
 
     String body = response.body;
@@ -190,21 +191,21 @@ class _JobsState extends State<Jobs> {
                     vertical: 10.0,
                   ),
                   child:
-                      OrdersBox(
-                        title: titleItems[index],
-                        salary: salaryItems[index],
-                        description: descriptionItems[index],
-                        company_name: company_nameItems[index],
-                          about_employer:about_employerItem[index],
-                        type: typeItems[index],
-                        company_location: company_locationItems[index],
-                        company_phone: company_phoneItems[index],
-                        company_email: company_emailItems[index],
-                        img: imgItems[index],
-                        selectedType: selectedType,
-                        typeId: jobTypes[index].id,
-                        //acceptedItems: acceptedItems,
-                      ),
+                  OrdersBox(
+                    title: titleItems[index],
+                    salary: salaryItems[index],
+                    description: descriptionItems[index],
+                    company_name: company_nameItems[index],
+                    about_employer:about_employerItem[index],
+                    type: typeItems[index],
+                    company_location: company_locationItems[index],
+                    company_phone: company_phoneItems[index],
+                    company_email: company_emailItems[index],
+                    img: imgItems[index],
+                    selectedType: selectedType,
+                    typeId: jobTypes[index].id,
+                    //acceptedItems: acceptedItems,
+                  ),
 
 
 
@@ -224,15 +225,15 @@ class _JobsState extends State<Jobs> {
                 child: Container(
                   width: 40,height: 40,
                   color: Colors.orange,child:  Center(
-                    child: Text("1",
+                  child: Text("1",
                     style: TextStyle(
                       fontSize:
                       MediaQuery.of(context).size.width * 0.06,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
-                ),
                   ),
+                ),
                 ),
               ),
               SizedBox(width: 5,),
@@ -295,7 +296,7 @@ class OrdersBox extends StatelessWidget {
     required this.img,
     required this.typeId,
     required this.selectedType,
-   //required this.acceptedItems,
+    //required this.acceptedItems,
     //required this.selectedItems,
 
   });
@@ -303,101 +304,101 @@ class OrdersBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return GestureDetector(
-          onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DetailsPage(img: img,selectedType: selectedType,typeId: typeId,company_email: company_email,company_phone: company_phone,company_location: company_location,type: type,company_name: company_name,about_employer: about_employer,description: description,salary: salary,title: title,)),
-        );
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.7,
-        height: 300,
-        decoration: BoxDecoration(
-          color: Color(0xff041038),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 9,
-              spreadRadius: 7,
-              color: Colors.grey.withOpacity(0.6),
-              offset: Offset(5, 5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 5,
-              height: 150,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 9,
-                    spreadRadius: 7,
-                    color: Colors.grey.withOpacity(0.6),
-                    offset: Offset(5, 5),
-                  ),
-                ],
+    return GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DetailsPage(img: img,selectedType: selectedType,typeId: typeId,company_email: company_email,company_phone: company_phone,company_location: company_location,type: type,company_name: company_name,about_employer: about_employer,description: description,salary: salary,title: title,)),
+          );
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.7,
+          height: 300,
+          decoration: BoxDecoration(
+            color: Color(0xff041038),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 9,
+                spreadRadius: 7,
+                color: Colors.grey.withOpacity(0.6),
+                offset: Offset(5, 5),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: Image.network(
-                  'https://skills.pythonanywhere.com/' + img,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                company_name,
-                style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.width * 0.05,
-                  color: Colors.orange,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 10,
-                bottom: 20,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      "العنوان الوظيفي : $title",
-                      style: TextStyle(
-                        fontSize:
-                        MediaQuery.of(context).size.width * 0.04,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 5,
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 9,
+                      spreadRadius: 7,
+                      color: Colors.grey.withOpacity(0.6),
+                      offset: Offset(5, 5),
                     ),
-                    Text(
-                      " الراتب : ${salary == 0 ? 'يحدد بعد المقابلة' : salary.toString()}",
-                      style: TextStyle(
-                        fontSize:
-                        MediaQuery.of(context).size.width * 0.04,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
                   ],
                 ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.network(
+                    'https://skills.pythonanywhere.com/' + img,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
-      )
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  company_name,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.05,
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 10,
+                  bottom: 20,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "العنوان الوظيفي : $title",
+                        style: TextStyle(
+                          fontSize:
+                          MediaQuery.of(context).size.width * 0.04,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        " الراتب : ${salary == 0 ? 'يحدد بعد المقابلة' : salary.toString()}",
+                        style: TextStyle(
+                          fontSize:
+                          MediaQuery.of(context).size.width * 0.04,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
 
 
     );
@@ -433,7 +434,7 @@ class DetailsPage extends StatelessWidget {
     required this.img,
     required this.typeId,
     required this.selectedType,
-});
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -441,113 +442,113 @@ class DetailsPage extends StatelessWidget {
         backgroundColor: Color(0xff041038),
 
         appBar: AppBar(
-        backgroundColor: Color(0xff041038),
-        title: Center(child: Text("تفاصيل الوظيفة",style: TextStyle(color: Colors.orange),)),
-        elevation: 0,
-      ),
-      body:
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-    Expanded(
-    child: ListView.builder(
-    itemCount: 1,
-    itemBuilder: (context, index) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: 250,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(25),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 9,
-                              spreadRadius: 7,
-                              color: Colors.grey.withOpacity(0.6),
-                              offset: Offset(5, 5),
-                            ),
-                          ],
-                        ),
-
-                          child:ClipRRect(
-                            borderRadius: BorderRadius.circular(25),
-                            child: Image.network(
-                              'https://skills.pythonanywhere.com/' + img,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-
-                      ),
-                    ),
-                    SizedBox(height: 20,),
-                    Row(
+          backgroundColor: Color(0xff041038),
+          title: Center(child: Text("تفاصيل الوظيفة",style: TextStyle(color: Colors.orange),)),
+          elevation: 0,
+        ),
+        body:
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.info,color: Colors.white,size: 30,),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('معلومات عن الجهة المقدمة للوضيفه',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05,color: Colors.orange),
-                                  ),
-                                  content: SingleChildScrollView(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            "اسم الجهة  :" +company_name,
-                                            style: TextStyle(
-                                              fontSize: MediaQuery.of(context).size.width*0.04,
-                                              color: Colors.orange,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
+                        Center(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            height: 250,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(25),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 9,
+                                  spreadRadius: 7,
+                                  color: Colors.grey.withOpacity(0.6),
+                                  offset: Offset(5, 5),
+                                ),
+                              ],
+                            ),
+
+                            child:ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Image.network(
+                                'https://skills.pythonanywhere.com/' + img,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.info,color: Colors.white,size: 30,),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('معلومات عن الجهة المقدمة للوضيفه',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05,color: Colors.orange),
+                                      ),
+                                      content: SingleChildScrollView(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
                                             children: [
                                               Text(
-                                                company_location,
+                                                "اسم الجهة  :" +company_name,
                                                 style: TextStyle(
                                                   fontSize: MediaQuery.of(context).size.width*0.04,
                                                   color: Colors.orange,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                              Icon(Icons.location_on_outlined,color: Colors.orange,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    company_location,
+                                                    style: TextStyle(
+                                                      fontSize: MediaQuery.of(context).size.width*0.04,
+                                                      color: Colors.orange,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  Icon(Icons.location_on_outlined,color: Colors.orange,),
+                                                ],
+                                              ),
                                             ],
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  actions: [
-                                    ElevatedButton(
-                                      child: const Text('إغلاق'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.orange,
-                                      ),
-                                    ),
-                                  ],
+                                      actions: [
+                                        ElevatedButton(
+                                          child: const Text('إغلاق'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.orange,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
                               },
-                            );
-                          },
-                        ),
-                        IconButton(onPressed: () {email();}, icon: const Icon(Icons.email_outlined,color: Colors.white,size: 30,),),
-                        /*
+                            ),
+                            IconButton(onPressed: () {email();}, icon: const Icon(Icons.email_outlined,color: Colors.white,size: 30,),),
+                            /*
                         IconButton(
                           icon: const Icon(Icons.phone,color: Colors.white,size: 30,),
                           onPressed: () {
@@ -600,94 +601,94 @@ class DetailsPage extends StatelessWidget {
                         ),
 
                          */
-                        IconButton(
-                          icon: const Icon(Icons.phone,color: Colors.white,size: 30,),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('التواصل مع معلن الوظيفة',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05,color: Colors.orange),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  content: SingleChildScrollView(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child:  Column(
-                                        children: [
-                                          Text(
-                                            "رقم الهاتف  :" +company_phone,
-                                            style: TextStyle(
-                                              fontSize: MediaQuery.of(context).size.width*0.04,
-                                              color: Colors.orange,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            textAlign: TextAlign.right,
+                            IconButton(
+                              icon: const Icon(Icons.phone,color: Colors.white,size: 30,),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('التواصل مع معلن الوظيفة',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05,color: Colors.orange),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      content: SingleChildScrollView(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child:  Column(
+                                            children: [
+                                              Text(
+                                                "رقم الهاتف  :" +company_phone,
+                                                style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.width*0.04,
+                                                  color: Colors.orange,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                textAlign: TextAlign.right,
+                                              ),
+
+                                            ],
                                           ),
 
-                                        ],
+                                        ),
                                       ),
-
-                                    ),
-                                  ),
-                                  actions: [
-                                    ElevatedButton(
-                                      child: const Text('إغلاق'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.orange,
-                                      ),
-                                    ),
-                                  ],
+                                      actions: [
+                                        ElevatedButton(
+                                          child: const Text('إغلاق'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.orange,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
                               },
-                            );
-                          },
+                            ),
+
+
+                          ],
+                        ),
+                        SizedBox(height: 15,),
+                        Text(
+                          "العنوان الوظيفي :" +title,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width*0.05,
+                            color: Colors.orange,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          " الراتب : ${salary == 0 ? 'يحدد بعد المقابلة' : salary.toString()}",
+                          style: TextStyle(
+                            fontSize:
+                            MediaQuery.of(context).size.width * 0.04,
+                            color: Colors.orange,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
 
+                        Text(
+                          "الوصف الوظيفي :" +description,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width*0.04,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
 
                       ],
                     ),
-                     SizedBox(height: 15,),
-                     Text(
-                        "العنوان الوظيفي :" +title,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width*0.05,
-                          color: Colors.orange,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    Text(
-                      " الراتب : ${salary == 0 ? 'يحدد بعد المقابلة' : salary.toString()}",
-                      style: TextStyle(
-                        fontSize:
-                        MediaQuery.of(context).size.width * 0.04,
-                        color: Colors.orange,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  );
 
-                    Text(
-                        "الوصف الوظيفي :" +description,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width*0.04,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.right,
-                      ),
-
-                  ],
-      ),
-    );
-
-    },
-    ),
-    ),
-        ],
-      )
+                },
+              ),
+            ),
+          ],
+        )
     );
   }
   calling()async{
