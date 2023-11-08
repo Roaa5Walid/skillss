@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 
 class Order {
@@ -469,6 +470,8 @@ class DetailsPage extends StatelessWidget {
                             );
                           },
                         ),
+                        IconButton(onPressed: () {email();}, icon: const Icon(Icons.email_outlined,color: Colors.white,size: 30,),),
+                        /*
                         IconButton(
                           icon: const Icon(Icons.phone,color: Colors.white,size: 30,),
                           onPressed: () {
@@ -519,6 +522,8 @@ class DetailsPage extends StatelessWidget {
                             );
                           },
                         ),
+
+                         */
                         IconButton(
                           icon: const Icon(Icons.phone,color: Colors.white,size: 30,),
                           onPressed: () {
@@ -646,17 +651,17 @@ class DetailsPage extends StatelessWidget {
     }
   }
 
-  email()async {
+  Future<void> email() async {
     final Uri _emailUrl = Uri(
       scheme: 'mailto',
       path: company_email,
-      queryParameters: {'subject': 'اريد ان اقدم على الوظيفه'},
+      queryParameters: {'subject': 'Hello'},
     );
 
-    if (await canLaunch(_emailUrl.toString())) {
-      await launch(_emailUrl.toString(), forceSafariVC: false);
+    if (await canLaunchUrlString(_emailUrl.toString())) {
+      await launchUrlString(_emailUrl.toString());
     } else {
-      throw 'لا يمكن فتح تطبيق البريد الإلكتروني.';
+      throw 'Could not launch $_emailUrl';
     }
   }
 

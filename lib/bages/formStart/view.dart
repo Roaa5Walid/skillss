@@ -97,7 +97,7 @@ class _FormStartState extends State<FormStart> {
   io.File? imageFile;
   final imagepicked = ImagePicker();
   uploadImage() async {
-    var pickedimage = await imagepicked.getImage(source: ImageSource.gallery);
+    var pickedimage = await imagepicked.getImage(source: ImageSource.camera);
     if (pickedimage != null) {
       setState(() {
         pickerImage = pickedimage;
@@ -557,7 +557,7 @@ class _FormStartState extends State<FormStart> {
                                       ],
                                     ),
                                     //image
-                                    /*
+
                                     Padding(
                                       padding: const EdgeInsets.only(top: 15),
                                       child: Container(
@@ -571,7 +571,7 @@ class _FormStartState extends State<FormStart> {
                                         color: Colors.grey,
                                       ),
                                     ),
-                                    */
+
 
 
                                     Padding(
