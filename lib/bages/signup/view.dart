@@ -152,7 +152,7 @@ class _signupState extends State<signup> {
                           ],
                         ),
                         
-                        /*
+
                         TextField(
                           controller: c_passwordController,
                           maxLength: 11,
@@ -173,7 +173,7 @@ class _signupState extends State<signup> {
                           obscureText: true,
                         ),
 
-                         */
+
 
                        
                       ],
@@ -234,30 +234,6 @@ class _signupState extends State<signup> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 15,),
-                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-              child: Text(
-              "اذا لم يكن لديك حساب اضغط هنا لانشاء حساب جديد",
-              style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.04,
-              color: Colors.white,
-              ),
-              ),
-                              onTap: () {
-                                setState(() {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => signin()));
-                                });
-                              }
-                          ),
-                        ],
-                      ),
-                    ),
 
                 ],
               );

@@ -35,6 +35,7 @@ class _JobsState extends State<Jobs> {
   List<String> descriptionItems = [];
   List<String> about_employerItem = [];
   List<String> typeItems = [];
+  List<String> ttypeItems = [];
   List<String> company_nameItems = [];
   List<String> company_locationItems = [];
   List<String> company_phoneItems = [];
@@ -105,7 +106,7 @@ class _JobsState extends State<Jobs> {
 
       List<dynamic> types = data["types"];
       for (int i = 0; i < types.length; i++) {
-        items_per_page.add(types[i]["items_per_page"] ?? 0);
+       items_per_page.add(types[i]["items_per_page"] ?? 0);
         id.add(types[i]["id"]);
         filteredJobTypes.add(types[i]["name"]);
       }

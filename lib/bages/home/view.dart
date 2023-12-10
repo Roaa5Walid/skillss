@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skillss/bages/formStart/view.dart';
 import 'package:skillss/bages/jobs/view.dart';
+import 'package:skillss/bages/workshop/view.dart';
+import 'package:skillss/courses/view.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -88,9 +90,19 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: Text('ورش ودورات',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange)),
+              title: Text('ورش ',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange)),
               onTap: () {
                 // اتخذ الإجراء المناسب عند النقر على العنصر الثاني
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => workshop()));
+              },
+            ),
+            ListTile(
+              title: Text('دورات ',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange)),
+              onTap: () {
+                // اتخذ الإجراء المناسب عند النقر على العنصر الثاني
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => courses()));
               },
             ),
             ListTile(
