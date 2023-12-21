@@ -11,6 +11,8 @@ const newstatus2="0";
 var c_nameController = TextEditingController();
 var c_phoneController = TextEditingController();
 var c_passwordController = TextEditingController();
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
 class signup extends StatefulWidget {
   const signup({Key? key}) : super(key: key);
@@ -99,34 +101,15 @@ class _signupState extends State<signup> {
                     ),
                   ),
                   Form(
+                    key: _formKey,
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: TextField(
-                            controller: c_nameController,
-                            maxLength: 50,
-                            cursorColor: Color(0xffffffff),
-                            style: const TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              counterStyle: TextStyle(
-                                color: Color(0xffffffff),
-                                fontSize: 12,
-                              ),
-                              fillColor: Colors.grey.withOpacity(0.3),
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              hintText: "name",
-                            ),
-                          ),
-                        ),
 
+                        textfielBox(c_nameController,"name"),
+                        textfielBox(c_passwordController, "password"),
                         SizedBox(
                           height: 20,
                         ),
-
                         TextField(
                           controller: c_phoneController,
                           maxLength: 15,
@@ -142,7 +125,7 @@ class _signupState extends State<signup> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            hintText: "+964 " + "phoneNumber",
+                            hintText: "+964 رقم الهاتف",
                           ),
                           keyboardType: TextInputType.phone,
                           inputFormatters: [
@@ -151,31 +134,8 @@ class _signupState extends State<signup> {
                             //PhoneNumberFormatter(),
                           ],
                         ),
-                        
-
-                        TextField(
-                          controller: c_passwordController,
-                          maxLength: 11,
-                          cursorColor: Color(0xffffffff),
-                          style: const TextStyle(color: Color(0xffffffff)),
-                          decoration: InputDecoration(
-                            counterStyle: TextStyle(
-                              color: Color(0xffffffff),
-                              fontSize: 12,
-                            ),
-                            fillColor: Colors.grey.withOpacity(0.3),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            hintText:"password",
-                          ),
-                          obscureText: true,
-                        ),
 
 
-
-                       
                       ],
                     ),
                   ),
@@ -268,3 +228,6 @@ class _signupState extends State<signup> {
 }
 
 
+/*
+
+ */

@@ -341,12 +341,12 @@ class OrdersBox extends StatelessWidget {
                     blurRadius: 9,
                     spreadRadius: 7,
                     color: Colors.grey.withOpacity(0.6),
-                    offset: Offset(5, 5),
+                    offset: Offset(5, 0),
                   ),
                 ],
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(20),
                 child: Image.network(
                   'https://skills.pythonanywhere.com/' + img,
                   fit: BoxFit.cover,

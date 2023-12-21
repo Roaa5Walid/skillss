@@ -3,6 +3,7 @@ import 'package:skillss/bages/formStart/view.dart';
 import 'package:skillss/bages/jobs/view.dart';
 import 'package:skillss/bages/workshop/view.dart';
 import 'package:skillss/courses/view.dart';
+import 'package:skillss/dataa.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -71,58 +72,23 @@ class _HomeState extends State<Home> {
       ),
 
       drawer: Drawer(
+        width: 200,
         backgroundColor:const Color(0xff041038) ,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              child: Text('SKILLS Services',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.white )),
+              child: Text('SKILLS SERVICES',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.white ,fontFamily: "Cairo")),
               decoration: const BoxDecoration(
                 color: Colors.orange,
               ),
             ),
-            ListTile(
-              title: Text('الوظائف',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange),),
-              onTap: () {
-                // اتخذ الإجراء المناسب عند النقر على العنصر الأول
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Jobs()));
-              },
-            ),
-            ListTile(
-              title: Text('ورش ',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange)),
-              onTap: () {
-                // اتخذ الإجراء المناسب عند النقر على العنصر الثاني
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => workshop()));
-              },
-            ),
-            ListTile(
-              title: Text('دورات ',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange)),
-              onTap: () {
-                // اتخذ الإجراء المناسب عند النقر على العنصر الثاني
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => courses()));
-              },
-            ),
-            ListTile(
-              title: Text('خدماتنا',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange)),
-              onTap: () {
-                // اتخذ الإجراء المناسب عند النقر على العنصر الثاني
-              },
-            ),
-            ListTile(
-              title: Text('سجل بيانتاتك',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange)),
-              onTap: () {
-                // اتخذ الإجراء المناسب عند النقر على العنصر الثاني
-              },
-            ),
-            ListTile(
-              title: Text('تواصل معنا',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color:Colors.orange)),
-              onTap: () {
-                // اتخذ الإجراء المناسب عند النقر على العنصر الثاني
-              },
-            ),
+              listText(context, 'الوظائف', Jobs()),
+            listText(context, 'ورش ', workshop()),
+            listText(context, 'دورات ', courses()),
+            listText(context, 'خدماتنا', Home()),
+            listText(context, 'سجل بيانتاتك', Home()),
+            listText(context, 'تواصل معنا', Home()),
             // إضافة المزيد من عناصر القائمة حسب الحاجة
           ],
         ),
@@ -179,13 +145,13 @@ class _HomeState extends State<Home> {
                         text: 'انظم الى شبكتنا الواسعة',
                         style: TextStyle(
                           fontSize: MediaQuery.of(context).size.width * 0.06,
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: "Cairo"
                         ),
                       ),
                       const TextSpan(text: '\n'),
                       TextSpan(
                         text: 'وابحث عن فرص',
-                        style: TextStyle(
+                        style: TextStyle(fontFamily: "Poppins",
                           fontSize: MediaQuery.of(context).size.width * 0.07,
                           color: Colors.orange,
                         ),
@@ -193,7 +159,7 @@ class _HomeState extends State<Home> {
                       const TextSpan(text: '\n'),
                       TextSpan(
                         text: 'وظيفية ودورات تدريبية',
-                        style: TextStyle(
+                        style: TextStyle(fontFamily: "beINNormal",
                           fontSize: MediaQuery.of(context).size.width * 0.08,
                           color: Colors.white,
                         ),

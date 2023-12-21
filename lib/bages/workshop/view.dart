@@ -317,17 +317,17 @@ class OrdersBox extends StatelessWidget {
           );
         },
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.7,
+          width: MediaQuery.of(context).size.width * 0.5,
           height: 400,
           decoration: BoxDecoration(
             color: Color(0xff041038),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(25),
             boxShadow: [
               BoxShadow(
-                blurRadius: 9,
-                spreadRadius: 7,
-                color: Colors.grey.withOpacity(0.6),
-                offset: Offset(5, 5),
+                blurRadius: 0,
+                spreadRadius: 2,
+                color: Colors.white.withOpacity(0.2),
+                offset: Offset(0, 0),
               ),
             ],
           ),
@@ -342,18 +342,18 @@ class OrdersBox extends StatelessWidget {
                   height: 200,
                   decoration: BoxDecoration(
                     color: Colors.black,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(25),
                     boxShadow: [
                       BoxShadow(
-                        blurRadius: 9,
-                        spreadRadius: 7,
-                        color: Colors.grey.withOpacity(0.6),
-                        offset: Offset(5, 5),
+                        blurRadius: 0,
+                        spreadRadius: 2,
+                        color: Colors.white.withOpacity(0.2),
+                        offset: Offset(0, 0),
                       ),
                     ],
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(25),
                     child: Image.network(
                       'https://skills.pythonanywhere.com/' + img,
                       fit: BoxFit.cover,
@@ -392,10 +392,10 @@ class OrdersBox extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        blurRadius: 1,
-                        spreadRadius: 4,
-                        color: Colors.orange.withOpacity(0.5),
-                        offset: Offset(5, 5),
+                        blurRadius: 0,
+                        spreadRadius: 2,
+                        color: Colors.white.withOpacity(0.2),
+                        offset: Offset(0, 0),
                       ),
                     ],
                   ),
@@ -520,10 +520,10 @@ class DetailsPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
-                                  blurRadius: 9,
-                                  spreadRadius: 7,
-                                  color: Colors.grey.withOpacity(0.6),
-                                  offset: Offset(5, 5),
+                                  blurRadius: 0,
+                                  spreadRadius: 2,
+                                  color: Colors.white.withOpacity(0.2),
+                                  offset: Offset(0, 0),
                                 ),
                               ],
                             ),

@@ -12,6 +12,7 @@ const newstatus2="0";
 var c_nameController = TextEditingController();
 var c_phoneController = TextEditingController();
 var c_passwordController = TextEditingController();
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class signin extends StatefulWidget {
   const signin({Key? key}) : super(key: key);
@@ -216,11 +217,12 @@ class _signinState extends State<signin> {
                   Text("Welcom to SKILLS !",style: TextStyle(color: Colors.white,
                     fontSize: MediaQuery.of(context).size.width * 0.04,),),
                   Form(
+                    key: _formKey,
                     child: Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 30),
-                          child: TextField(
+                          child: TextFormField(
                             controller: c_nameController,
                             maxLength: 50,
                             cursorColor: Color(0xffffffff),
@@ -237,45 +239,19 @@ class _signinState extends State<signin> {
                               ),
                               hintText: "name",
                             ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'يجب ملء هذا الحقل';
+                              }
+                              return null;
+                            },
                           ),
                         ),
-/*
                         SizedBox(
                           height: 20,
                         ),
 
-                        TextField(
-                          controller: c_phoneController,
-                          maxLength: 15,
-                          cursorColor: Color(0xffffffff),
-                          style: const TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            counterStyle: TextStyle(
-                              color: Color(0xffffffff),
-                              fontSize: 12,
-                            ),
-                            fillColor: Colors.grey.withOpacity(0.3),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            hintText: "+964 " + "phoneNumber",
-                          ),
-                          keyboardType: TextInputType.phone,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9+]')),
-                            LengthLimitingTextInputFormatter(15),
-                            //PhoneNumberFormatter(),
-                          ],
-                        ),
-
- */
-
-                        SizedBox(
-                          height: 20,
-                        ),
-
-                        TextField(
+                        TextFormField(
                           controller: c_passwordController,
                           maxLength: 11,
                           cursorColor: Color(0xffffffff),
@@ -290,9 +266,15 @@ class _signinState extends State<signin> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            hintText:"password",
+                            hintText: "password",
                           ),
                           obscureText: true,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'يجب ملء هذا الحقل';
+                            }
+                            return null;
+                          },
                         ),
 
                         SizedBox(
@@ -332,19 +314,18 @@ class _signinState extends State<signin> {
                   Padding(
                     padding: const EdgeInsets.all(50),
                     child: ElevatedButton(
-                      onPressed: (){
-                        setState(() {
-                          name = c_nameController.text;
-                          password=c_passwordController.text;
-
-
-
-                          main();
-                          //place=placeOforder;
-
-                          //fetchDataAndTokens();
-                        });
-                      },
+              onPressed: () {
+              if (_formKey.currentState!.validate()) {
+              // تنفيذ الإجراء عندما يكون النموذج صالحًا
+              setState(() {
+               name = c_nameController.text;
+              password = c_passwordController.text;
+              main();
+              // place=placeOforder;
+              // fetchDataAndTokens();
+              });
+              }
+              },
 
 
                       child: Text("next",
@@ -374,28 +355,6 @@ class _signinState extends State<signin> {
         ),
       ),
     );
-  }
-  void _submitForm() {
-    var phoneNumber = c_phoneController.text;
-    if (phoneNumber.startsWith("+964")) {
-      // إذا تم إدخال رمز الدولة بشكل صحيح، يمكن استمرار عملية الإرسال
-      // ...
-    } else {
-      // إذا لم يتم إدخال رمز الدولة بشكل صحيح، يتم إظهار رسالة خطأ للمستخدم
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Error"),
-          content: Text("Please enter a valid phone number with country code +964"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("OK"),
-            ),
-          ],
-        ),
-      );
-    }
   }
 }
 

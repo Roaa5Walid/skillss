@@ -10,28 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:skillss/bages/home/view.dart';
 import 'package:skillss/dataa.dart';
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-
-var c_arnameController = TextEditingController();
-var c_ennameController = TextEditingController();
-var c_phoneController = TextEditingController();
-var c_emailController = TextEditingController();
-var c_addressController = TextEditingController();
-
-var c_month_birthController = TextEditingController();
-var c_day_birthController = TextEditingController();
-var c_yearController = TextEditingController();
-
-var c_courseController = TextEditingController();
-var c_expertiseController = TextEditingController();
-var c_collegeController = TextEditingController();
-var c_start_YearController = TextEditingController();
-var c_graduation_YearController = TextEditingController();
-var c_cvController = TextEditingController();
-var c_hGraduationController = TextEditingController();
-
-var c_imageController = TextEditingController();
-var c_image2Controller = TextEditingController();
 
 class FormStart extends StatefulWidget {
   const FormStart({Key? key}) : super(key: key);
@@ -285,8 +265,8 @@ class _FormStartState extends State<FormStart> {
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(40),
-                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(25),
+                              topLeft: Radius.circular(25),
                             )),
                         child: Form(
                           key: _key,
@@ -295,470 +275,203 @@ class _FormStartState extends State<FormStart> {
                               shrinkWrap: true,
                               itemCount: 1,
                               itemBuilder: (BuildContext context, int i) {
-                                return Column(
-                                  children: [
+                                return  Column(
+                                    children: [
+                                      textfielBox(c_arnameController, "الاسم الثلاثي بالعربي"),
+                                      textfielBox(c_ennameController, "الاسم الثلاثي بالانكليزي"),
 
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_arnameController,
-                                        validator: (c_arnameController) {
-                                          if (c_arnameController != null &&
-                                              c_arnameController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"الاسم الثلاثي بالعربي",
-                                          hintText:
-                                          "الاسم الثلاثي بالعربي",
-                                          //suffixStyle: TextStyle(fontSize: 40)
+                                      /*
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Text("placeOfOrder",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.black54),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        width: 1,
+                                                        color: Colors.black
+                                                            .withOpacity(0.3)),
+                                                    borderRadius:
+                                                    BorderRadius.circular(15),
+                                                  ),
+                                                  child: DropdownButton<String>(
+                                                    underline: Container(),
+                                                    value: dropdownValue,
+                                                    // Step 4.
+                                                    items: <String>[
+                                                      "",
+                                                     "inside",
+                                                      "outside"
+                                                    ].map<
+                                                        DropdownMenuItem<
+                                                            String>>(
+                                                            (String value) {
+                                                          return DropdownMenuItem<
+                                                              String>(
+                                                            enabled: value != "",
+                                                            value: value,
+                                                            child: Text(
+                                                              value,
+                                                              style: TextStyle(
+                                                                  fontSize: 15),
+                                                            ),
+                                                            onTap: () {},
+                                                          );
+                                                        }).toList(),
+                                                    // Step 5.
+                                                    onChanged:
+                                                        (String? newValue) {
+                                                      setState(() {
+                                                        dropdownValue = newValue!;
+                                                        //placeOforder = newValue;
+                                                      });
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Text("typeOfPassport",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.black54),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_ennameController,
-                                        validator: (c_ennameController) {
-                                          if (c_ennameController != null &&
-                                              c_ennameController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"الاسم الثلاثي بالانكليزي",
-                                          hintText:
-                                          "الاسم الثلاثي بالانكليزي",
-                                          //suffixStyle: TextStyle(fontSize: 40)
+
+                                       */
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          controller: c_phoneController,
+                                          validator: (c_phoneController) {
+                                            if (c_phoneController != null &&
+                                                c_phoneController.isEmpty) {
+                                              return "requiredField";
+                                            }
+                                            return null;
+                                          },
+                                          decoration: InputDecoration(
+                                            border: const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(25),
+                                                )),
+                                            labelText:"رقم الهاتف",
+                                            hintText:
+                                            "رقم الهاتف",
+                                            //suffixStyle: TextStyle(fontSize: 40)
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    /*
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                      textfielBox(c_emailController, "البريد الالكتروني"),
+                                      textfielBox(c_addressController, "عنوانالسكن"),
+                                      textfielBox(c_day_birthController, "يوم المولد"),
+                                      textfielBox(c_month_birthController, "شهر المولد"),
+                                      textfielBox(c_yearController, "سنة المولد"),
+                                      textfielBox(c_courseController, "اسم الكورسات والتدريبات ان وجدت"),
+                                      textfielBox(c_collegeController, "اسم الجامعه والكليةوالقسم"),
+                                      textfielBox(c_graduation_YearController, "سنة التخرج"),
+                                     textfielBox(c_start_YearController, "سنة البداية في الجامعة"),
+                                      textfielBox(c_cvController, "السيرة الذاتية"),
+                                      Column(
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              Text("placeOfOrder",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.black54),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: Colors.black
-                                                          .withOpacity(0.3)),
-                                                  borderRadius:
-                                                  BorderRadius.circular(15),
-                                                ),
-                                                child: DropdownButton<String>(
-                                                  underline: Container(),
-                                                  value: dropdownValue,
-                                                  // Step 4.
-                                                  items: <String>[
-                                                    "",
-                                                   "inside",
-                                                    "outside"
-                                                  ].map<
-                                                      DropdownMenuItem<
-                                                          String>>(
-                                                          (String value) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          enabled: value != "",
-                                                          value: value,
-                                                          child: Text(
-                                                            value,
-                                                            style: TextStyle(
-                                                                fontSize: 15),
-                                                          ),
-                                                          onTap: () {},
-                                                        );
-                                                      }).toList(),
-                                                  // Step 5.
-                                                  onChanged:
-                                                      (String? newValue) {
-                                                    setState(() {
-                                                      dropdownValue = newValue!;
-                                                      //placeOforder = newValue;
-                                                    });
-                                                  },
+                                          Padding(
+                                            padding: const EdgeInsets.all(25),
+                                            child: MaterialButton(
+                                              onPressed: () {
+                                                uploadImage();
+                                              },
+                                              height: 50,
+                                              shape: const StadiumBorder(),
+                                              color:
+                                              Colors.white.withOpacity(0.7),
+                                              child: Center(
+                                                child: Text("placePhoto",
+                                                  style: const TextStyle(
+                                                      color: Colors.orange,
+                                                      fontSize: 20),
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              Text("typeOfPassport",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.black54),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
+                                      //image
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 15),
+                                        child: Container(
+                                          height: 100,
+                                          width: 100,
+                                          child: Center(
+                                            child: imageFile == null
+                                                ? Text("image")
+                                                : Image.file(imageFile!),
+                                          ),
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(50),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            if (_formKey.currentState!.validate()) {
+                                              // تنفيذ الإجراء عندما يكون النموذج صالحًا
+                                              setState(() {
+                                               //name = c_nameController.text;
+                                                //password = c_passwordController.text;
+                                                //main();
+                                                // place=placeOforder;
+                                                // fetchDataAndTokens();
+                                              });
+                                            }
+                                          },
 
-                                     */
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_phoneController,
-                                        validator: (c_phoneController) {
-                                          if (c_phoneController != null &&
-                                              c_phoneController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"رقم الهاتف",
-                                          hintText:
-                                          "رقم الهاتف",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_emailController,
-                                        validator: (c_emailController) {
-                                          if (c_emailController != null &&
-                                              c_emailController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"البريد الالكتروني",
-                                          hintText:
-                                          "البريد الالكتروني",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_addressController,
-                                        validator: (val) {
-                                          if (val != null && val.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"عنوانالسكن",
-                                          hintText:"عنوانالسكن",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_day_birthController,
-                                        validator: (c_day_birthController) {
-                                          if (c_day_birthController != null &&
-                                              c_day_birthController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"يوم المولد",
-                                          hintText:
-                                          "يوم المولد",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_month_birthController,
-                                        validator: (c_month_birthController) {
-                                          if (c_month_birthController != null &&
-                                              c_month_birthController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"شهر المولد",
-                                          hintText:
-                                          "شهر المولد",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_yearController,
-                                        validator: (c_yearController) {
-                                          if (c_yearController != null &&
-                                              c_yearController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"سنة المولد",
-                                          hintText:
-                                          "سنة المولد",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_courseController,
-                                        validator: (c_courseController) {
-                                          if (c_courseController != null &&
-                                              c_courseController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"اسم الكورسات والتدريبات ان وجدت",
-                                          hintText:
-                                          "اسم الكورسات والتدريبات ان وجدت",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_collegeController,
-                                        validator: (c_collegeController) {
-                                          if (c_collegeController != null &&
-                                              c_collegeController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"اسم الجامعه والكليةوالقسم",
-                                          hintText:
-                                          "اسم الجامعة والكلية والقسم",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_graduation_YearController,
-                                        validator: (c_graduation_YearController) {
-                                          if (c_graduation_YearController != null &&
-                                              c_graduation_YearController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"سنة التخرج",
-                                          hintText:
-                                          "سنة التخرج",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_start_YearController,
-                                        validator: (c_start_YearController) {
-                                          if (c_start_YearController != null &&
-                                              c_start_YearController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"سنة البداية في الجامعة",
-                                          hintText:
-                                          "سنة البداية في الجامعة",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_cvController,
-                                        validator: (c_cvController) {
-                                          if (c_cvController != null &&
-                                              c_cvController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(15),
-                                              )),
-                                          labelText:"السيرة الذاتية",
-                                          hintText:
-                                          "السيرة الذاتية",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(15),
-                                          child: MaterialButton(
-                                            onPressed: () {
-                                              uploadImage();
-                                            },
-                                            height: 50,
-                                            shape: const StadiumBorder(),
-                                            color:
-                                            Colors.white.withOpacity(0.7),
-                                            child: Center(
-                                              child: Text("placePhoto",
-                                                style: const TextStyle(
-                                                    color: Colors.orange,
-                                                    fontSize: 20),
+
+                                          child: Text("next",
+                                            style: TextStyle(
+                                              fontSize: 25,
+                                              color: Colors.orange,
+                                            ),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                              elevation: 5,
+                                              primary: Color(0xffffffff),
+                                              // padding: EdgeInsets.symmetric(horizontal:200, vertical: 20),
+                                              side: BorderSide(
+                                                width: 0,
                                               ),
-                                            ),
-                                          ),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                    20,
+                                                  ))),
                                         ),
-                                      ],
-                                    ),
-                                    //image
-
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 15),
-                                      child: Container(
-                                        height: 100,
-                                        width: 100,
-                                        child: Center(
-                                          child: imageFile == null
-                                              ? Text("image")
-                                              : Image.file(imageFile!),
-                                        ),
-                                        color: Colors.grey,
                                       ),
-                                    ),
+                                    ],
 
-
-
-                                    Padding(
-                                      padding: const EdgeInsets.all(50),
-                                      child: ElevatedButton(
-                                onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Home()));
-                                setState(() {
-                                  arname = c_arnameController.text;
-                                enname=c_ennameController.text;
-
-
-
-                                  main();
-                                //place=placeOforder;
-                                  //fetchDataAndTokens();
-                                });
-                                },
-
-
-                                        child: Text("next",
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                            color: Colors.orange,
-                                          ),
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                            elevation: 5,
-                                            primary: Color(0xffffffff),
-                                            // padding: EdgeInsets.symmetric(horizontal:200, vertical: 20),
-                                            side: BorderSide(
-                                              width: 0,
-                                            ),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                  20,
-                                                ))),
-                                      ),
-                                    ),
-                                  ],
                                 );
                               }),
                         ),

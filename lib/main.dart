@@ -5,6 +5,7 @@ import 'package:skillss/bages/jobs/view.dart';
 import 'package:skillss/bages/sign%20in/view.dart';
 import 'package:skillss/spla/view.dart';
 
+import 'bages/Register-your-information/individuals/view.dart';
 import 'bages/bottonNevegation/view.dart';
 import 'bages/signup/view.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:signin(),
+      home:Individuals(),
     );
   }
 }
