@@ -200,38 +200,6 @@ class _IndividualsState extends State<Individuals> {
                               itemBuilder: (BuildContext context, int i) {
                                 return  Column(
                                   children: [
-                                    ElevatedButton(
-                                    onPressed: () async {
-                                  try {
-                                    var result = await fetchDataAndTokens();
-                                    var csrfToken = result['csrfToken']!;
-                                    var sessionId = result['sessionId']!;
-
-                                    var url = 'https://www.skillsiraq.com/edu/api/register_university/';
-                                    var headers = {
-                                      'Content-Type': 'application/x-www-form-urlencoded',
-                                      'Cookie': 'csrftoken=$csrfToken; sessionid=$sessionId',
-                                      'X-CSRFToken': csrfToken,
-                                    };
-
-                                    var data = {
-
-                                      "name": "University Name",
-                                      "established_year": 1990,
-                                      "total_students": 5000,
-                                      "description": "This is a description of the university.",
-                                      "location": "City, Country",
-                                      "needs": "Requirements or needs of the university.",
-                                      "email": "university@example.com"
-                                    };
-
-                                    await postData('https://www.skillsiraq.com/edu/api/register_university/' as Uri, headers,data,csrfToken,sessionId);
-                                  } catch (e) {https://ww
-                                    print('Error: $e');
-                                  }
-                                },
-                                child: Text('Perform Sign Up'),
-                                ),
 
                                     textfielBox(c_arnameController, "الاسم الثلاثي بالعربي"),
                                     textfielBox(c_ennameController, "الاسم الثلاثي بالانكليزي"),

@@ -51,7 +51,7 @@ class _Jobs2State extends State<Jobs2> {
   //List<String> status = [];
 
   Future<void> getData() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/jobs/api?ctype=جميع الوظائف&page=2");
+    var url = Uri.parse("https://www.skillsiraq.com/jobs/api?ctype=جميع الوظائف&page=2");
     Response response = await get(url);
 
     String body = response.body;
@@ -97,7 +97,7 @@ class _Jobs2State extends State<Jobs2> {
 
 
   Future<void> getData2() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/jobs/api");
+    var url = Uri.parse("https://www.skillsiraq.com/jobs/api");
     Response response = await get(url);
 
     if (response.statusCode == 200) {
@@ -346,9 +346,9 @@ class OrdersBox extends StatelessWidget {
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),bottomRight: Radius.circular(25)),
                   child: Image.network(
-                    'https://skills.pythonanywhere.com/' + img,
+                    'https://www.skillsiraq.com/' + img,
                     fit: BoxFit.cover,
                   ),
                 ),

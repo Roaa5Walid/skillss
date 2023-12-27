@@ -4,10 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:skillss/bages/jobs/view.dart';
+import 'package:skillss/bages/jobs/view.dart';
 import 'package:skillss/bages/jobs/view2.dart';
 import 'package:skillss/dataa.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:skillss/courses/view.dart' as View;
+
+
+import '../../courses/view.dart';
+
+
 
 
 class Order {
@@ -52,7 +59,7 @@ class _workshopState extends State<workshop> {
   //List<String> status = [];
 
   Future<void> getData() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/edu/api/workshops/");
+    var url = Uri.parse("https://www.skillsiraq.com/edu/api/workshops/");
     Response response = await get(url);
 
     String body = response.body;
@@ -97,7 +104,7 @@ class _workshopState extends State<workshop> {
 
 
   Future<void> getData2() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/edu/api/workshops/");
+    var url = Uri.parse("https://www.skillsiraq.com/edu/api/workshops/");
     Response response = await get(url);
 
     if (response.statusCode == 200) {
@@ -192,8 +199,7 @@ class _workshopState extends State<workshop> {
                     horizontal: 20.0,
                     vertical: 10.0,
                   ),
-                  child:
-                  OrdersBox(
+                  child:View.OrdersBox(
                     name: name[index],
                     price: priceItems[index],
                     description: descriptionItems[index],
@@ -209,6 +215,8 @@ class _workshopState extends State<workshop> {
                     //typeId: workshopTypes[index].id,
                     //acceptedItems: acceptedItems,
                   ),
+
+
 
 
 
@@ -266,8 +274,87 @@ class _workshopState extends State<workshop> {
       ),
     );
   }
-}
+  void showDetailsPage({
+    required BuildContext context,
+    required String name,
+    required int price,
+    required String description,
+    required String longdescription,
+    required String img,
+    required String type,
+    required String trainer,
+    required String trainerDescription,
+    required String duration,
+    required String trainerGender,
+    required int discount,
+    required String selectedType,
+  }) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              'التفاصيل',
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.05,
+                color: Colors.orange,
+              ),
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text(
+                    "مدة الورشة  :" + duration,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.orange,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "نوع الورشة  :" + type,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.orange,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "%" + "الخصم  :" + "$discount",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                      color: Colors.orange,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              child: const Text('إغلاق'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.orange,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
+}
+///
+/// /
+/*
 class OrdersBox extends StatelessWidget {
   final String name;
   final int price;
@@ -279,6 +366,7 @@ class OrdersBox extends StatelessWidget {
   final String trainerDescription;
   final String duration;
   final String trainerGender;
+
   //final int typeId;
   final int discount;
   final String selectedType;
@@ -313,145 +401,191 @@ class OrdersBox extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DetailsPage(name: name,price: price,discount: discount,img: img,longdescription: longdescription,trainer: trainer,trainerDescription: trainerDescription,duration: duration,type: type,trainerGender: trainerGender,description: description,selectedType: selectedType,)),
+            MaterialPageRoute(builder: (context) =>
+                View.DetailsPage(title: "تفاصيل الورشة",
+                  name: name,
+                  price: price,
+                  discount: discount,
+                  img: img,
+                  longdescription: longdescription,
+                  trainer: trainer,
+                  trainerDescription: trainerDescription,
+                  duration: duration,
+                  type: type,
+                  trainerGender: trainerGender,
+                  description: description,
+                  selectedType: selectedType,)),
           );
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          height: 400,
-          decoration: BoxDecoration(
-            color: Color(0xff041038),
-            borderRadius: BorderRadius.circular(25),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 0,
-                spreadRadius: 2,
-                color: Colors.white.withOpacity(0.2),
-                offset: Offset(0, 0),
-              ),
-            ],
+        child: Text("View"),
+
+
+    );
+  }
+  ///
+Container MainBox(BuildContext context){
+    return Container(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.7,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height * 0.7,
+      decoration: BoxDecoration(
+        color: Color(0xff041038),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 2,
+            spreadRadius: 2,
+            color: Colors.grey.withOpacity(0.6),
+            // offset: Offset(5, 5),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.start,
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 5,
+            height: 350,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 2,
+                  spreadRadius: 2,
+                  color: Colors.grey.withOpacity(0.6),
+                  // offset: Offset(5, 0),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                'https://www.skillsiraq.com/' + img,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Center(
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontSize: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.05,
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+
+          Text(
+              textAlign: TextAlign.right,
+              description,
+              style: MyTextStyles.textStylePages(
+                  context, Colors.white.value)
+          ),
+          Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 5,
+            height: 60,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 0,
+                  spreadRadius: 2,
+                  color: Colors.white.withOpacity(0.2),
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 5,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 0,
-                        spreadRadius: 2,
-                        color: Colors.white.withOpacity(0.2),
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Image.network(
-                      'https://skills.pythonanywhere.com/' + img,
-                      fit: BoxFit.cover,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    trainerGender == 'انثى' ?"images/female.png" : "images/male.png",
+                    width: MediaQuery.of(context).size.width * 0.06,
+                    //color: Colors.white,
                   ),
                 ),
+                /*
                 Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Icon(
+                    trainerGender == 'انثى' ? Icons.female : Icons.male,
+                    size: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.06, color: Colors.orange,
+                  ),
+                ),
+
+                 */
+                Text(
+                  trainer + " " + trainerDescription,
+                  style: TextStyle(
+                    fontSize: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.03,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 5,),
+                Container(
+                  width: 100, height: 60,
+                  color: Colors.orange.withOpacity(0.5),
                   child: Center(
-                    child: Text(
-                      name,
+                    child: Text(textAlign: TextAlign.right,
+                      "$price",
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.05,
-                        color: Colors.orange,
+                        fontSize:
+                        MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.04,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-
-                        Text(
-                          textAlign:TextAlign.right,
-                          description,
-                          style: TextStyle(
-                            fontSize:
-                            MediaQuery.of(context).size.width * 0.04,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 5,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 0,
-                        spreadRadius: 2,
-                        color: Colors.white.withOpacity(0.2),
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Icon(
-                            trainerGender == 'انثى' ?
-                            Icons.female
-                                : Icons.male,
-                            size:MediaQuery.of(context).size.width * 0.06,color: Colors.orange,
-                          ),
-                        ),
-                        Text(
-                          trainer+" "+trainerDescription,
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width * 0.03,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(width: 5,),
-                        Container(
-                          width: 100,height: 60,
-                          color: Colors.orange.withOpacity(0.5),
-                          child: Center(
-                            child: Text(  textAlign:TextAlign.right,
-                             "$price",
-                              style: TextStyle(
-                                fontSize:
-                                MediaQuery.of(context).size.width * 0.04,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                ),
-
               ],
             ),
-          ),
-        )
 
+          ),
+
+        ],
+      ),
 
     );
-  }
+}
 }
 
-
+ */
+///
+/*
 
 class DetailsPage extends StatelessWidget {
   final String name;
@@ -531,7 +665,7 @@ class DetailsPage extends StatelessWidget {
                             child:ClipRRect(
                               borderRadius: BorderRadius.circular(25),
                               child: Image.network(
-                                'https://skills.pythonanywhere.com/' + img,
+                                'https://www.skillsiraq.com/' + img,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -746,11 +880,7 @@ class DetailsPage extends StatelessWidget {
 
                         Text(
                          longdescription,
-                          style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.width*0.04,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:MyTextStyles.textStylePages(context, Colors.white.value),
                           textAlign: TextAlign.right,
                         ),
 
@@ -818,6 +948,8 @@ class DetailsPage extends StatelessWidget {
 
 }
 
+ */
+///
 
 /*
 Future<void> getData2() async {

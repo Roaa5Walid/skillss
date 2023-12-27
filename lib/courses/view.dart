@@ -52,7 +52,7 @@ class _coursesState extends State<courses> {
   //List<String> status = [];
 
   Future<void> getData() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/edu/api/courses/");
+    var url = Uri.parse("https://www.skillsiraq.com/edu/api/courses/");
     Response response = await get(url);
 
     String body = response.body;
@@ -97,7 +97,7 @@ class _coursesState extends State<courses> {
 
 
   Future<void> getData2() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/edu/api/courses/");
+    var url = Uri.parse("https://www.skillsiraq.com/edu/api/courses/");
     Response response = await get(url);
 
     if (response.statusCode == 200) {
@@ -313,142 +313,173 @@ class OrdersBox extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DetailsPage(name: name,price: price,discount: discount,img: img,longdescription: longdescription,trainer: trainer,trainerDescription: trainerDescription,duration: duration,type: type,trainerGender: trainerGender,description: description,selectedType: selectedType,)),
+            MaterialPageRoute(builder: (context) => DetailsPage(title: "التفاصيل ",name: name,price: price,discount: discount,img: img,longdescription: longdescription,trainer: trainer,trainerDescription: trainerDescription,duration: duration,type: type,trainerGender: trainerGender,description: description,selectedType: selectedType,)),
           );
         },
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.7,
-          height: 400,
-          decoration: BoxDecoration(
-            color: Color(0xff041038),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 9,
-                spreadRadius: 7,
-                color: Colors.grey.withOpacity(0.6),
-                offset: Offset(5, 5),
-              ),
-            ],
+        child: MainBox(context),
+
+
+    );
+  }
+  Container MainBox(BuildContext context){
+    return Container(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.7,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height * 0.7,
+      decoration: BoxDecoration(
+        color: Color(0xff041038),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 2,
+            spreadRadius: 2,
+            color: Colors.grey.withOpacity(0.6),
+            // offset: Offset(5, 5),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.start,
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 5,
+            height: 350,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 2,
+                  spreadRadius: 2,
+                  color: Colors.grey.withOpacity(0.6),
+                  // offset: Offset(5, 0),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                'https://www.skillsiraq.com/' + img,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Center(
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontSize: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.05,
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+
+          Text(
+              textAlign: TextAlign.right,
+              description,
+              style: MyTextStyles.textStylePages(
+                  context, Colors.white.value)
+          ),
+          Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 5,
+            height: 60,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 0,
+                  spreadRadius: 2,
+                  color: Colors.white.withOpacity(0.2),
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 5,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 9,
-                        spreadRadius: 7,
-                        color: Colors.grey.withOpacity(0.6),
-                        offset: Offset(5, 5),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.network(
-                      'https://skills.pythonanywhere.com/' + img,
-                      fit: BoxFit.cover,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    trainerGender == 'انثى' ?"images/female.png" : "images/male.png",
+                    width: MediaQuery.of(context).size.width * 0.06,
+                    //color: Colors.white,
                   ),
                 ),
+                /*
                 Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Icon(
+                    trainerGender == 'انثى' ? Icons.female : Icons.male,
+                    size: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.06, color: Colors.orange,
+                  ),
+                ),
+
+                 */
+                Text(
+                  trainer + " " + trainerDescription,
+                  style: TextStyle(
+                    fontSize: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.03,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 5,),
+                Container(
+                  width: 100, height: 60,
+                  color: Colors.orange.withOpacity(0.5),
                   child: Center(
-                    child: Text(
-                      name,
+                    child: Text(textAlign: TextAlign.right,
+                      "$price",
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.05,
-                        color: Colors.orange,
+                        fontSize:
+                        MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.04,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-
-                Text(
-                  textAlign:TextAlign.right,
-                  description,
-                  style: TextStyle(
-                    fontSize:
-                    MediaQuery.of(context).size.width * 0.04,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 5,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 1,
-                        spreadRadius: 4,
-                        color: Colors.orange.withOpacity(0.5),
-                        offset: Offset(5, 5),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Icon(
-                          trainerGender == 'انثى' ?
-                          Icons.female
-                              : Icons.male,
-                          size:MediaQuery.of(context).size.width * 0.06,color: Colors.orange,
-                        ),
-                      ),
-                      Text(
-                        trainer+" "+trainerDescription,
-                        style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width * 0.03,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(width: 5,),
-                      Container(
-                        width: 100,height: 60,
-                        color: Colors.orange.withOpacity(0.5),
-                        child: Center(
-                          child: Text(  textAlign:TextAlign.right,
-                            "$price",
-                            style: TextStyle(
-                              fontSize:
-                              MediaQuery.of(context).size.width * 0.04,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                ),
-
               ],
             ),
-          ),
-        )
 
+          ),
+
+        ],
+      ),
 
     );
   }
+
 }
 
 
@@ -467,6 +498,7 @@ class DetailsPage extends StatelessWidget {
   //final int typeId;
   final int discount;
   final String selectedType;
+  final String title;
 
   DetailsPage({
     required this.name,
@@ -484,6 +516,7 @@ class DetailsPage extends StatelessWidget {
     required this.selectedType,
     //required this.acceptedItems,
     //required this.selectedItems,
+    required this.title,
   });
 
   @override
@@ -493,7 +526,7 @@ class DetailsPage extends StatelessWidget {
 
         appBar: AppBar(
           backgroundColor: Color(0xff041038),
-          title: Center(child: Text("تفاصيل الدورة",style: TextStyle(color: Colors.orange),)),
+          title: Center(child: Text(title,style: TextStyle(color: Colors.orange),)),
           elevation: 0,
         ),
         body:
@@ -514,16 +547,16 @@ class DetailsPage extends StatelessWidget {
                         Center(
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            height: 250,
+                            height: 350,
                             decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
-                                  blurRadius: 9,
-                                  spreadRadius: 7,
-                                  color: Colors.grey.withOpacity(0.6),
-                                  offset: Offset(5, 5),
+                                  blurRadius: 0,
+                                  spreadRadius: 2,
+                                  color: Colors.white.withOpacity(0.2),
+                                  offset: Offset(0, 0),
                                 ),
                               ],
                             ),
@@ -531,7 +564,7 @@ class DetailsPage extends StatelessWidget {
                             child:ClipRRect(
                               borderRadius: BorderRadius.circular(25),
                               child: Image.network(
-                                'https://skills.pythonanywhere.com/' + img,
+                                'https://www.skillsiraq.com/' + img,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -707,7 +740,7 @@ class DetailsPage extends StatelessWidget {
                         ),
                         SizedBox(height: 15,),
                         Text(
-                          "نبذة تعريفية عن دورة " +name,
+                          "نبذة تعريفية عن ورشة " +name,
                           style: TextStyle(
                             fontSize: MediaQuery.of(context).size.width*0.05,
                             color: Colors.orange,
@@ -815,6 +848,7 @@ class DetailsPage extends StatelessWidget {
       throw 'Could not launch $_emailUrl';
     }
   }
+
 
 }
 

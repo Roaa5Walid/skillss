@@ -51,7 +51,7 @@ class _JobsState extends State<Jobs> {
   //List<String> status = [];
 
   Future<void> getData() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/jobs/api");
+    var url = Uri.parse("https://www.skillsiraq.com/jobs/api");
     Response response = await get(url);
 
     String body = response.body;
@@ -97,7 +97,7 @@ class _JobsState extends State<Jobs> {
 
 
   Future<void> getData2() async {
-    var url = Uri.parse("https://skills.pythonanywhere.com/jobs/api");
+    var url = Uri.parse("https://www.skillsiraq.com/jobs/api");
     Response response = await get(url);
 
     if (response.statusCode == 200) {
@@ -135,16 +135,30 @@ class _JobsState extends State<Jobs> {
       backgroundColor: Colors.white,
       appBar:AppBar(
         title: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(8),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               PopupMenuButton<String>(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20), // تعديل هذه القيمة حسب الحاجة
+                  child: Row(
+                    children: [
+                      Icon(Icons.arrow_drop_down, color: Colors.orange, size: 30,),
+                      Text(
+                        'الوظائف',
+                        style: TextStyle(
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 itemBuilder: (BuildContext context) {
                   List<PopupMenuItem<String>> items = filteredJobTypes.map((type) {
                     return PopupMenuItem<String>(
-                      value: type  ,
-                      child: Text(type ),
+                      value: type,
+                      child: Text(type),
                     );
                   }).toList();
 
@@ -156,18 +170,6 @@ class _JobsState extends State<Jobs> {
                   });
                   print(selectedType);
                 },
-
-                child: Row(
-                  children: [
-                    Icon(Icons.arrow_drop_down,color: Colors.orange,size: 30,),
-                    Text(
-                      'الوظائف',
-                      style: TextStyle(
-                        color: Colors.orange,
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
@@ -313,16 +315,16 @@ class OrdersBox extends StatelessWidget {
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.7,
-        height: 300,
+        height: MediaQuery.of(context).size.height * 0.7,
         decoration: BoxDecoration(
           color: Color(0xff041038),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              blurRadius: 9,
-              spreadRadius: 7,
+              blurRadius: 2,
+              spreadRadius: 2,
               color: Colors.grey.withOpacity(0.6),
-              offset: Offset(5, 5),
+              //offset: Offset(5, 5),
             ),
           ],
         ),
@@ -332,23 +334,23 @@ class OrdersBox extends StatelessWidget {
           children: [
             Container(
               width: MediaQuery.of(context).size.width * 5,
-              height: 150,
+              height: 350,
               decoration: BoxDecoration(
                 color: Colors.black,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    blurRadius: 9,
-                    spreadRadius: 7,
+                    blurRadius: 2,
+                    spreadRadius: 2,
                     color: Colors.grey.withOpacity(0.6),
-                    offset: Offset(5, 0),
+                    //offset: Offset(5, 0),
                   ),
                 ],
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.network(
-                  'https://skills.pythonanywhere.com/' + img,
+                  'https://www.skillsiraq.com/' + img,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -464,16 +466,15 @@ class DetailsPage extends StatelessWidget {
                     Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.9,
-                        height: 250,
+                        height: 350,
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(25),
                           boxShadow: [
                             BoxShadow(
-                              blurRadius: 9,
-                              spreadRadius: 7,
-                              color: Colors.grey.withOpacity(0.6),
-                              offset: Offset(5, 5),
+                              blurRadius: 2,
+                              spreadRadius: 2,
+                              color: Colors.white.withOpacity(0.5),
                             ),
                           ],
                         ),
@@ -481,7 +482,7 @@ class DetailsPage extends StatelessWidget {
                           child:ClipRRect(
                             borderRadius: BorderRadius.circular(25),
                             child: Image.network(
-                              'https://skills.pythonanywhere.com/' + img,
+                              'https://www.skillsiraq.com/' + img,
                               fit: BoxFit.cover,
                             ),
                           ),

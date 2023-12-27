@@ -95,3 +95,57 @@ var c_hGraduationController = TextEditingController();
 var c_imageController = TextEditingController();
 var c_image2Controller = TextEditingController();
 String dropdownValue = "";
+
+///text style
+class dataaa extends StatefulWidget {
+  const dataaa({super.key});
+
+  @override
+  State<dataaa> createState() => _dataaaState();
+}
+
+class _dataaaState extends State<dataaa> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+  TextStyle textStylePages(int col){
+    return TextStyle(
+      fontSize:  MediaQuery.of(context).size.width * 0.04,
+      color: Color(col),
+      fontWeight: FontWeight.bold,
+      fontFamily: "Cairo",
+
+    );
+  }
+}
+
+class MyTextStyles {
+  static TextStyle textStylePages(BuildContext context, int col) {
+    return TextStyle(
+      fontSize: MediaQuery.of(context).size.width * 0.04,
+      color: Color(col),
+      fontWeight: FontWeight.bold,
+      fontFamily: "Cairo",
+    );
+  }
+}
+List<int>items_per_page=[];
+List<int>idd=[];
+//List<String> name = [];
+List<int> priceItems = [];
+List<String> descriptionItems = [];
+List<String> imgItems = [];
+List<String> longdescriptionItem = [];
+List<String> trainerItems = [];
+List<String> trainerDescriptionItems = [];
+List<String> durationItems = [];
+List<String> typeItems = [];
+List<String> trainerGenderItems = [];
+List<int>discount=[];
+List<bool> acceptedItems = [];
+List<bool> selectedItems = [];
+//List<workshopType> workshopTypes = [];
+String selectedType = '';
+List<String> filteredWorkshop_choices = [];
+List<int>id=[];
