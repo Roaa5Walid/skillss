@@ -1,39 +1,45 @@
-import 'dart:io' as io;
+import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:skillss/bages/home/view.dart';
-import 'package:skillss/bages/jobs/view.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:skillss/dataa.dart';
 
-import '../../../dataa.dart';
+
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
-class Individuals extends StatefulWidget {
-  const Individuals({super.key});
+class CreateCV2 extends StatefulWidget {
+  const CreateCV2({super.key});
 
   @override
-  State<Individuals> createState() => _IndividualsState();
+
+  State<CreateCV2> createState() => _CreateCV2State();
 }
 
-class _IndividualsState extends State<Individuals> {
-  String? urlImage;
-  PickedFile? pickerImage;
+class _CreateCV2State extends State<CreateCV2> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   String status = "";
-  io.File? imageFile;
-  final imagepicked = ImagePicker();
-  PickedFile? _imageFile;
+  String dropdownValue = "AR"; // Default language value
+
+  late XFile? _imageFile = null  ;
+
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
 
     try {
-      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+      final XFile? image = (await picker.pickImage(source: ImageSource.camera));
 
       if (image != null) {
+        //final filePath = image.path; // Get the file path from XFile
+        //_imageFile = File(filePath) as XFile; // Create a File object from the path
         setState(() {
-          // Cast the XFile to PickedFile as they have compatible properties
-          _imageFile = image as PickedFile?; // Safe downcast
+          _imageFile = image ;
         });
       } else {
         print('No image selected');
@@ -41,44 +47,152 @@ class _IndividualsState extends State<Individuals> {
     } catch (e) {
       print('Error picking image: $e');
     }
-  }
 
-  void _showSuccessDialog() {
-    showTimePicker(context: context, initialTime: TimeOfDay.now());
   }
 
 
-  void main() async {
+  Future<void> sendCv({
+    required String url,
+    required String fullName,
+    required String phoneNumber,
+    required String email,
+    required String address,
+    required String universityInfo,
+    required String universityStartYear,
+    required String universityGraduationYear,
+    required String birthDay,
+    required String birthMonth,
+    required String birthYear,
+    required String language,
+    required File imageFile,
+    required String coursesAndTraining,
+    required String workExperience,
+  }) async {
     try {
+
+      // Fetch CSRF token
+      var csrfResponse = await http.get(Uri.parse(url));
+      if (csrfResponse.statusCode != 200) {
+        throw Exception('Failed to fetch CSRF token');
+      }
+      var csrfToken = csrfResponse.headers['set-cookie']?.split(';')?.firstWhere((cookie) => cookie.startsWith('csrftoken='))?.split('=')?.last;
+      if (csrfToken == null) {
+        throw Exception('Failed to fetch CSRF token');
+      }
+
+      // Fetch CSRF token and session ID
       var result = await fetchDataAndTokens();
-      var csrfToken = result['csrfToken']!;
+       csrfToken = result['csrfToken']!;
       var sessionId = result['sessionId']!;
 
-      var url = Uri.parse('https://www.skillsiraq.com/edu/api/register_university/');
       var headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Cookie': 'csrftoken=$csrfToken; sessionid=$sessionId',
+        'Content-Type': 'multipart/form-data', // Use multipart/form-data for image uploads
+        'Cookie': 'csrftoken=$csrfToken;  sessionid=$sessionId',
         'X-CSRFToken': '$csrfToken',
+        'Referer': 'https://www.skillsiraq.com/edu/make_cv/',
       };
 
+
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll(headers);
+
+      request.headers['Referer'] = url;
+      request.headers['X-CSRFToken'] = csrfToken;
+      request.headers['Cookie'] = 'csrftoken=$csrfToken';
+
+
+      /*
+      request.fields['full_name'] = fullName;
+      request.fields['phone_number'] = phoneNumber;
+      request.fields['email'] = email;
+      request.fields['address'] = address;
+      request.fields['university_info'] = universityInfo;
+      request.fields['university_start_year'] = universityStartYear;
+      request.fields['university_graduation_year'] = universityGraduationYear;
+      request.fields['birth_day'] = birthDay;
+      request.fields['birth_month'] = birthMonth;
+      request.fields['birth_year'] = birthYear;
+      request.fields['language'] = language;
+      request.fields['courses_and_training'] = coursesAndTraining;
+      request.fields['work_experience'] = workExperience;
+
+       */
+      // Add form fields
       var data = {
-        "name": "University Name",
-        "established_year": "1990",
-        "total_students": "5000",
-        "description": "This is a description of the university.",
-        "location": "City, Country",
-        "needs": "Requirements or needs of the university.",
-        "email": "university@example.com",
+        "full_name": fullName,
+        "phone_number": phoneNumber,
+        "email": email,
+        "address": address,
+        "university_info": universityInfo,
+        "university_start_year": universityStartYear,
+        "university_graduation_year": universityGraduationYear,
+        "birth_day": birthDay,
+        "birth_month": birthMonth,
+        "birth_year": birthYear,
+        "language": language,
+        "courses_and_training": coursesAndTraining,
+        "work_experience": workExperience,
       };
+      request.fields.addAll(data);
 
-      await postData(url, headers, data, csrfToken, sessionId);
+      if (_imageFile != null) {
+        var imageStream = http.ByteStream(_imageFile!.openRead()); // Use _imageFile!.openRead()
+        var imageLength = await _imageFile!.length();
+
+        request.files.add(http.MultipartFile(
+          'img',
+          imageStream,
+          imageLength,
+          filename: _imageFile!.path.split('/').last,
+          contentType: MediaType('image', 'jpeg'),
+        ));
+      }
+
+
+      var response = await request.send();
+// Get the response
+      var responseString = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        print('POST request successful');
+        print('Response data: $responseString');
+        if (responseString.contains('"success": true')) {
+          print('CV submission successful');
+        } else {
+          print('CV submission failed');
+        }
+      } else {
+        print('Failed to send POST request. Status code: ${response.statusCode}');
+        print('Response data: $responseString');
+      }
     } catch (e) {
       print('Error: $e');
     }
   }
 
+
+  void main() async {
+   // File imageFile = _imageFile as File;
+    await sendCv(
+      url: 'https://www.skillsiraq.com/edu/make_cv/',
+      fullName: c_arnameController.text,
+      phoneNumber: c_phoneController.text,
+      email: c_emailController.text,
+      address: c_addressController.text,
+      universityInfo: universityInfoController.text,
+      universityStartYear: universityStartYearController.text,
+      universityGraduationYear: universityGraduationYearController.text,
+      birthDay: c_day_birthController.text,
+      birthMonth: c_month_birthController.text,
+      birthYear: c_yearController.text,
+      language: dropdownValue, // or EN for english
+      imageFile:  File(_imageFile!.path) , // Check for null before conversion
+      coursesAndTraining: c_courseController.text,
+      workExperience: c_workExperienceController.text,
+    );
+  }
   Future<Map<String, String>> fetchDataAndTokens() async {
-    var url = Uri.parse('https://www.skillsiraq.com/edu/register/');
+    var url = Uri.parse('https://www.skillsiraq.com/edu/make_cv/');
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -121,52 +235,8 @@ class _IndividualsState extends State<Individuals> {
     }
   }
 
-  Future<void> postData(Uri url, Map<String, String> headers, Map<String, dynamic> formData, String csrfToken, String sessionId) async {
-    var fullUrl = Uri.parse('https://www.skillsiraq.com/edu/api/register_university/');
-
-    // Add the Referer header to satisfy CSRF protection
-    headers['Referer'] = 'https://www.skillsiraq.com/edu/register/';
-
-    try {
-      var response = await http.post(
-        fullUrl,
-        headers: headers,
-        body: formData,
-      );
-
-      if (response.statusCode == 200) {
-        print('POST request successful');
-        print('Response data: ${response.body}');
-        print('Response headers: ${response.headers}');
-
-        // Check the response from the server for successful registration
-        if (response.body.contains('"success": true')) {
-          // Handle successful registration, e.g., navigate to a success page
-          print('Registration successful');
-        } else {
-          // Handle unsuccessful registration
-          print('Registration failed');
-        }
-      } else {
-        print('Failed to send POST request. Status code: ${response.statusCode}');
-        print('Response data: ${response.body}');
-      }
-    } catch (e) {
-      print('Error sending POST request: $e');
-    }
-  }
 
 
-//GOODLUCK! :)
-/*
-{"name": "University Name",
-      "established_year": 1990,
-      "total_students": 5000,
-      "description": "This is a description of the university.",
-      "location": "City, Country",
-      "needs": "Requirements or needs of the university.",
-      "email": "university@example.com"};
- */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -209,11 +279,19 @@ class _IndividualsState extends State<Individuals> {
                               itemBuilder: (BuildContext context, int i) {
                                 return  Column(
                                   children: [
+                                    textfielBox(c_arnameController, "الاسم الثلاثي "),
+                                    PhoneFieldBox(c_phoneController, "رقم الهاتف"),
+                                    textfielBox(c_emailController, "البريد الالكتروني"),
+                                    textfielBox(c_addressController, "عنوانالسكن"),
+                                    textfielBox(universityInfoController, "اسم الجامعة والكلية والقسم"),
+                                    textfielBox(universityStartYearController, "سنة البداية في الجامعة"),
+                                    textfielBox(universityGraduationYearController, "سنة التخرج"),
+                                    textfielBox(c_day_birthController, "يوم المولد"),
+                                    textfielBox(c_month_birthController, "شهر المولد"),
+                                    textfielBox(c_yearController, "سنة المولد"),
+                                    textfielBox(c_courseController, "اسم الكورسات والتدريبات ان وجدت"),
+                                    textfielBox(c_workExperienceController, "الخبرة العملية اذا كنت تعمل سابقا"),
 
-                                    textfielBox(c_arnameController, "الاسم الثلاثي بالعربي"),
-                                    textfielBox(c_ennameController, "الاسم الثلاثي بالانكليزي"),
-
-                                    /*
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
@@ -224,7 +302,7 @@ class _IndividualsState extends State<Individuals> {
                                               crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                               children: [
-                                                Text("placeOfOrder",
+                                                Text("اللغة",
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       color: Colors.black54),
@@ -247,8 +325,8 @@ class _IndividualsState extends State<Individuals> {
                                                     // Step 4.
                                                     items: <String>[
                                                       "",
-                                                     "inside",
-                                                      "outside"
+                                                     "AR",
+                                                      "EN"
                                                     ].map<
                                                         DropdownMenuItem<
                                                             String>>(
@@ -262,7 +340,8 @@ class _IndividualsState extends State<Individuals> {
                                                               style: TextStyle(
                                                                   fontSize: 15),
                                                             ),
-                                                            onTap: () {},
+
+                                                            onTap: () => print("Language selected: $value"), // Example action on tap
                                                           );
                                                         }).toList(),
                                                     // Step 5.
@@ -271,129 +350,20 @@ class _IndividualsState extends State<Individuals> {
                                                       setState(() {
                                                         dropdownValue = newValue!;
                                                         //placeOforder = newValue;
+
                                                       });
+
                                                     },
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                Text("typeOfPassport",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.black54),
-                                                ),
-                                              ],
-                                            ),
+
                                           ],
                                         ),
                                       ),
 
-                                       */
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                        controller: c_phoneController,
-                                        validator: (c_phoneController) {
-                                          if (c_phoneController != null &&
-                                              c_phoneController.isEmpty) {
-                                            return "requiredField";
-                                          }
-                                          return null;
-                                        },
-                                        decoration: InputDecoration(
-                                          border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(25),
-                                              )),
-                                          labelText:"رقم الهاتف",
-                                          hintText:
-                                          "رقم الهاتف",
-                                          //suffixStyle: TextStyle(fontSize: 40)
-                                        ),
-                                      ),
-                                    ),
-                                    textfielBox(c_emailController, "البريد الالكتروني"),
-                                    textfielBox(c_addressController, "عنوانالسكن"),
-                                    textfielBox(c_day_birthController, "يوم المولد"),
-                                    textfielBox(c_month_birthController, "شهر المولد"),
-                                    textfielBox(c_yearController, "سنة المولد"),
-                                    textfielBox(c_courseController, "اسم الكورسات والتدريبات ان وجدت"),
-                                    textfielBox(c_expertiseController, "الخبرة العملية اذا كنت تعمل سابقا"),
-                                    textfielBox(c_collegeController, "اسم الجامعه والكليةوالقسم"),
-                                    textfielBox(c_start_YearController, "سنة البداية في الجامعة"),
-                                    textfielBox(c_graduation_YearController, "سنة التخرج"),
-                                    textfielBox(c_cvController, "السيرة الذاتية"),
 
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child:
-                                        Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                Text("خريج",
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.black54),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Container(
-                                                  width:MediaQuery.of(context).size.width,
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        width: 1,
-                                                        color: Colors.black
-                                                            .withOpacity(0.3)),
-                                                    borderRadius:
-                                                    BorderRadius.circular(15),
-                                                  ),
-                                                  child: DropdownButton<String>(
-                                                    underline: Container(),
-                                                    value: dropdownValue,
-                                                    // Step 4.
-                                                    items: <String>[
-                                                      "",
-                                                     "نعم",
-                                                      "كلا"
-                                                    ].map<
-                                                        DropdownMenuItem<
-                                                            String>>(
-                                                            (String value) {
-                                                          return DropdownMenuItem<
-                                                              String>(
-                                                            enabled: value != "",
-                                                            value: value,
-                                                            child: Text(
-                                                              value,
-                                                              style: TextStyle(
-                                                                  fontSize: 15),
-                                                            ),
-                                                            onTap: () {},
-                                                          );
-                                                        }).toList(),
-                                                    // Step 5.
-                                                    onChanged:
-                                                        (String? newValue) {
-                                                      setState(() {
-                                                        dropdownValue = newValue!;
-                                                        //placeOforder = newValue;
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-
-                                      ),
 
 
 
@@ -402,8 +372,8 @@ class _IndividualsState extends State<Individuals> {
                                         Padding(
                                           padding: const EdgeInsets.all(25),
                                           child: MaterialButton(
-                                            onPressed: () {
-                                              _pickImage();
+                                            onPressed: ()  async {
+                                              await _pickImage();
                                             },
                                             height: 50,
                                             shape: const StadiumBorder(),
@@ -427,19 +397,44 @@ class _IndividualsState extends State<Individuals> {
                                         height: 100,
                                         width: 100,
                                         child: Center(
-                                          child: imageFile == null
-                                              ? Text("image")
-                                              : Image.file(imageFile!),
+                                          child: _imageFile == null
+                                              ? Text('No image selected.')
+                                              : Image.file(File(_imageFile!.path),
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                        color: Colors.grey,
+                                        color: Colors.white12,
                                       ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(50),
                                       child: ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async{
+                                  if (_formKey.currentState!.validate()) {
                                           setState(() {
+                                            _imageFile!.path;
+                                            print(_imageFile!.path);
                                             main();
+                                            /*
+                                            sendCv(url: 'https://www.skillsiraq.com/edu/make_cv/',
+                                              fullName: c_arnameController.text,
+                                              phoneNumber: c_phoneController.text,
+                                              email: c_emailController.text,
+                                              address: c_addressController.text,
+                                              universityInfo: universityInfoController.text,
+                                              universityStartYear: universityStartYearController.text,
+                                              universityGraduationYear: universityGraduationYearController.text,
+                                              birthDay: c_day_birthController.text,
+                                              birthMonth: c_month_birthController.text,
+                                              birthYear: c_yearController.text,
+                                              language: dropdownValue, // or EN for english
+                                              imageFile:  File(_imageFile!.path) , // Check for null before conversion
+                                              coursesAndTraining: c_courseController.text,
+                                              workExperience: c_workExperienceController.text,);
+
+                                             */
                                           });
                                           /*
             if (_formKey.currentState != null && _formKey.currentState!.validate()) {
@@ -449,9 +444,10 @@ class _IndividualsState extends State<Individuals> {
             }
 
                                            */
-            },
+    }
+                                        },
 
-            // تنفيذ الإجراء عندما يكون النموذج صالحًا
+                                        // تنفيذ الإجراء عندما يكون النموذج صالحًا
 
 
 

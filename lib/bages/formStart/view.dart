@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:http/http.dart';
 import 'dart:io' as io;
 
@@ -219,17 +220,26 @@ class _FormStartState extends State<FormStart> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   //var image;
-  io.File? imageFile;
-  final imagepicked = ImagePicker();
-  uploadImage() async {
-    var pickedimage = await imagepicked.getImage(source: ImageSource.camera);
-    if (pickedimage != null) {
-      setState(() {
-        pickerImage = pickedimage;
-        imageFile = io.File(pickedimage.path);
-      });
-    } else {}
+  PickedFile? _imageFile;
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+
+    try {
+      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+
+      if (image != null) {
+        setState(() {
+          // Cast the XFile to PickedFile as they have compatible properties
+          _imageFile = image as PickedFile?; // Safe downcast
+        });
+      } else {
+        print('No image selected');
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+    }
   }
+
 
   void _showSuccessDialog() {
     showTimePicker(context: context, initialTime: TimeOfDay.now());
@@ -402,7 +412,7 @@ class _FormStartState extends State<FormStart> {
                                             padding: const EdgeInsets.all(25),
                                             child: MaterialButton(
                                               onPressed: () {
-                                                uploadImage();
+                                                _pickImage();
                                               },
                                               height: 50,
                                               shape: const StadiumBorder(),
@@ -426,9 +436,13 @@ class _FormStartState extends State<FormStart> {
                                           height: 100,
                                           width: 100,
                                           child: Center(
-                                            child: imageFile == null
-                                                ? Text("image")
-                                                : Image.file(imageFile!),
+                                            child: _imageFile == null
+                                                ? Text('No image selected.')
+                                                : Image.file(File(_imageFile!.path),
+                                              height: 100,
+                                              width: 100,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                           color: Colors.grey,
                                         ),

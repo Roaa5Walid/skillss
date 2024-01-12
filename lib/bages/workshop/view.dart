@@ -225,51 +225,7 @@ class _workshopState extends State<workshop> {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>Jobs()),
-                  );
-                },
-                child: Container(
-                  width: 40,height: 40,
-                  color: Colors.orange,child:  Center(
-                  child: Text("1",
-                    style: TextStyle(
-                      fontSize:
-                      MediaQuery.of(context).size.width * 0.06,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                ),
-              ),
-              SizedBox(width: 5,),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>Jobs2()),
-                  );
-                },
-                child: Container(
-                  width: 40,height: 40,
-                  color: Colors.orange,child:  Center(
-                  child: Text("2",
-                    style: TextStyle(
-                      fontSize:
-                      MediaQuery.of(context).size.width * 0.06,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                ),
-              ),
-
-            ],
-          )
+         pagesArrow(context, () => workshop(), () => workshop())
         ],
       ),
     );

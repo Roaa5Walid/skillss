@@ -32,10 +32,14 @@ dependencies:
     sdk: flutter
   http: ^0.13.5
   intl: ^0.17.0
-  image_picker: ^0.8.6
+  image_picker: ^1.0.7
   url_launcher: ^6.2.1
   google_nav_bar: ^5.0.6
-  dio: ^4.0.0
+  dio: ^5.4.1
+  font_awesome_flutter: ^9.0.0
+
+
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -69,6 +73,7 @@ flutter:
     - images/logo.png
     - images/female.png
     - images/male.png
+    - images/WhatsApp.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

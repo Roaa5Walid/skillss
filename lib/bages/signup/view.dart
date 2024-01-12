@@ -9,7 +9,7 @@ import '../sign in/view.dart';
 
 const newstatus2="0";
 var c_nameController = TextEditingController();
-var c_phoneController = TextEditingController();
+var phoneController = TextEditingController();
 var c_passwordController = TextEditingController();
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -111,7 +111,7 @@ class _signupState extends State<signup> {
                           height: 20,
                         ),
                         TextField(
-                          controller: c_phoneController,
+                          controller: phoneController,
                           maxLength: 15,
                           cursorColor: Color(0xffffffff),
                           style: const TextStyle(color: Colors.white),
@@ -147,7 +147,7 @@ class _signupState extends State<signup> {
                     height: 50, // <-- match-parent
                     child: ElevatedButton(
                       onPressed: () {
-                        var phoneNumber = c_phoneController.text;
+                        var phoneNumber = phoneController.text;
                         if (phoneNumber.startsWith("+964")) {
                           _submitForm();
                          Navigator.of(context).push(
@@ -204,7 +204,7 @@ class _signupState extends State<signup> {
     );
   }
   void _submitForm() {
-    var phoneNumber = c_phoneController.text;
+    var phoneNumber = phoneController.text;
     if (phoneNumber.startsWith("+964")) {
       // إذا تم إدخال رمز الدولة بشكل صحيح، يمكن استمرار عملية الإرسال
       // ...
