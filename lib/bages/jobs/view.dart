@@ -97,25 +97,23 @@ class _JobsState extends State<Jobs> {
 
 
   Future<void> getData2() async {
-    var url = Uri.parse("https://www.skillsiraq.com/jobs/api");
+
+    var url = Uri.parse("https://www.skillsiraq.com/jobs/api?type=$selectedType&page=1&page=2");
     Response response = await get(url);
 
     if (response.statusCode == 200) {
       String body = response.body;
       Map<String, dynamic> data = json.decode(body);
 
-      List<dynamic> types = data["types"];
-      for (int i = 0; i < types.length; i++) {
-       items_per_page.add(types[i]["items_per_page"] ?? 0);
-        id.add(types[i]["id"]);
-        filteredJobTypes.add(types[i]["name"]);
-      }
-
       setState(() {
-        // قم بوضع الكود الخاص بتحديث واجهة المستخدم هنا
+        List<dynamic> types = data["types"];
+        for (int i = 0; i < types.length; i++) {
+          // استخراج البيانات وتحديث واجهة المستخدم
+          // items_per_page.add(types[i]["items_per_page"] ?? 0);
+          id.add(types[i]["id"]);
+          filteredJobTypes.add(types[i]["name"]);
+        }
       });
-
-      print(data);
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
@@ -216,51 +214,7 @@ class _JobsState extends State<Jobs> {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>Jobs()),
-                  );
-                },
-                child: Container(
-                  width: 40,height: 40,
-                  color: Colors.orange,child:  Center(
-                    child: Text("1",
-                    style: TextStyle(
-                      fontSize:
-                      MediaQuery.of(context).size.width * 0.06,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 5,),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>Jobs2()),
-                  );
-                },
-                child: Container(
-                  width: 40,height: 40,
-                  color: Colors.orange,child:  Center(
-                  child: Text("2",
-                    style: TextStyle(
-                      fontSize:
-                      MediaQuery.of(context).size.width * 0.06,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                ),
-              ),
-
-            ],
-          )
+         pagesArrow(context, () => Jobs(), () => Jobs2())
         ],
       ),
     );

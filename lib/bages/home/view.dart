@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:skillss/bages/Register-your-information/company/view.dart';
+import 'package:skillss/bages/Register-your-information/individuals/view.dart';
+import 'package:skillss/bages/Register-your-information/university/view.dart';
+import 'package:skillss/bages/communication/view.dart';
 import 'package:skillss/bages/formStart/view.dart';
 import 'package:skillss/bages/jobs/view.dart';
 import 'package:skillss/bages/workshop/view.dart';
@@ -88,7 +92,7 @@ class _HomeState extends State<Home> {
             listText(context, 'دورات ', courses()),
             listText(context, 'خدماتنا', Home()),
             listText(context, 'سجل بيانتاتك', Home()),
-            listText(context, 'تواصل معنا', Home()),
+            listText(context, 'تواصل معنا', Communication()),
             // إضافة المزيد من عناصر القائمة حسب الحاجة
           ],
         ),
@@ -122,6 +126,7 @@ class _HomeState extends State<Home> {
                       ),
                       fit: BoxFit.cover,
                     ),
+                    /*
                     boxShadow: [
                       const BoxShadow(
                           blurRadius: 7,
@@ -130,6 +135,8 @@ class _HomeState extends State<Home> {
                           color: Colors.black26
                       )
                     ],
+
+                     */
                     //color: Colors.white
                   ),
                 ),
@@ -198,6 +205,27 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text("سجل بياناتك",style: MyTextStyles.textStylePages(context, Colors.white.value),
+
+                ),
+              ],
+            ),
+            Container(
+             height: 130.0, // Set a fixed height
+              // Set a fixed height
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                children: [
+                  homeBox(context,"الافراد",() => Individuals()),
+                  homeBox(context,"الجامعات",() => University()),
+                  homeBox(context,"المؤسسات",() => Company()),
+                ],
+              ),
+            )
 
           ],
         );

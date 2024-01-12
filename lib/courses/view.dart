@@ -217,51 +217,7 @@ class _coursesState extends State<courses> {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>Jobs()),
-                  );
-                },
-                child: Container(
-                  width: 40,height: 40,
-                  color: Colors.orange,child:  Center(
-                  child: Text("1",
-                    style: TextStyle(
-                      fontSize:
-                      MediaQuery.of(context).size.width * 0.06,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                ),
-              ),
-              SizedBox(width: 5,),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>Jobs2()),
-                  );
-                },
-                child: Container(
-                  width: 40,height: 40,
-                  color: Colors.orange,child:  Center(
-                  child: Text("2",
-                    style: TextStyle(
-                      fontSize:
-                      MediaQuery.of(context).size.width * 0.06,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                ),
-              ),
-
-            ],
-          )
+          pagesArrow(context, () => courses(), () => courses())
         ],
       ),
     );
@@ -323,14 +279,8 @@ class OrdersBox extends StatelessWidget {
   }
   Container MainBox(BuildContext context){
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.7,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height * 0.7,
+      width: MediaQuery.of(context).size.width * 0.7,
+      height: MediaQuery.of(context).size.height * 0.7,
       decoration: BoxDecoration(
         color: Color(0xff041038),
         borderRadius: BorderRadius.circular(20),
@@ -352,7 +302,7 @@ class OrdersBox extends StatelessWidget {
                 .of(context)
                 .size
                 .width * 5,
-            height: 350,
+            height: 400,
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.circular(20),
@@ -379,10 +329,7 @@ class OrdersBox extends StatelessWidget {
               child: Text(
                 name,
                 style: TextStyle(
-                  fontSize: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.05,
+                  fontSize: MediaQuery.of(context).size.width * 0.05,
                   color: Colors.orange,
                   fontWeight: FontWeight.bold,
                 ),
@@ -396,23 +343,13 @@ class OrdersBox extends StatelessWidget {
               style: MyTextStyles.textStylePages(
                   context, Colors.white.value)
           ),
+          SizedBox(height: 5,),
           Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * 5,
+            width: MediaQuery.of(context).size.width * 5,
             height: 60,
             decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(5),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 0,
-                  spreadRadius: 2,
-                  color: Colors.white.withOpacity(0.2),
-                  offset: Offset(0, 0),
-                ),
-              ],
+              color: Colors.white38,
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -423,7 +360,7 @@ class OrdersBox extends StatelessWidget {
                   child: Image.asset(
                     trainerGender == 'انثى' ?"images/female.png" : "images/male.png",
                     width: MediaQuery.of(context).size.width * 0.06,
-                    //color: Colors.white,
+                    //color: Colors.orange,
                   ),
                 ),
                 /*
@@ -453,7 +390,10 @@ class OrdersBox extends StatelessWidget {
                 SizedBox(width: 5,),
                 Container(
                   width: 100, height: 60,
-                  color: Colors.orange.withOpacity(0.5),
+                  decoration: BoxDecoration(
+                    color: Colors.white38,
+                    borderRadius: BorderRadius.only(bottomRight:Radius.circular(20),topRight: Radius.circular(20)),
+                  ),
                   child: Center(
                     child: Text(textAlign: TextAlign.right,
                       "$price",
@@ -635,105 +575,7 @@ class DetailsPage extends StatelessWidget {
                               },
                             ),
                             IconButton(onPressed: () {email();}, icon: const Icon(Icons.email_outlined,color: Colors.white,size: 30,),),
-                            /*
-                        IconButton(
-                          icon: const Icon(Icons.phone,color: Colors.white,size: 30,),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('التواصل مع معلن الوظيفة',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05,color: Colors.orange),
-                                  textAlign: TextAlign.right,
-                                  ),
-                                  content: SingleChildScrollView(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child:  Column(
-                                        children: [
-                                          Text(
-                                            "رقم الهاتف  :" +company_phone,
-                                            style: TextStyle(
-                                              fontSize: MediaQuery.of(context).size.width*0.04,
-                                              color: Colors.orange,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            textAlign: TextAlign.right,
-                                          ),
-                                          TextButton(onPressed: () {calling();}, child: Text(" Phone call")),
-                                          TextButton(onPressed: () {sms();}, child: Text(" Send sms")),
-                                          TextButton(onPressed: () {email();}, child: Text(" Send Email")),
-                                          TextButton(onPressed: () {whatsapp();}, child: Text(" Whatsapp")),
-                                          TextButton(onPressed: () {messenger();}, child: Text(" Facebook messenger")),
-                                        ],
-                                      ),
-
-                                    ),
-                                  ),
-                                  actions: [
-                                    ElevatedButton(
-                                      child: const Text('إغلاق'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.orange,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-
-                         */
-                            IconButton(
-                              icon: const Icon(Icons.phone,color: Colors.white,size: 30,),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text('التواصل مع معلن الوظيفة',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.05,color: Colors.orange),
-                                        textAlign: TextAlign.right,
-                                      ),
-                                      content: SingleChildScrollView(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child:  Column(
-                                            children: [
-                                              Text(
-                                                "رقم الهاتف  :" +trainerDescription,
-                                                style: TextStyle(
-                                                  fontSize: MediaQuery.of(context).size.width*0.04,
-                                                  color: Colors.orange,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                                textAlign: TextAlign.right,
-                                              ),
-
-                                            ],
-                                          ),
-
-                                        ),
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          child: const Text('إغلاق'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.orange,
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                            ),
+                            IconButton(onPressed: () { whatsapp();}, icon: const Icon(Icons.phone,color: Colors.white,size: 30,),),
 
 
                           ],
@@ -776,7 +618,15 @@ class DetailsPage extends StatelessWidget {
                             ),
                           ],
                         ),
-
+                        Text(
+                          "خبرة المدرب  :" +trainerDescription,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width*0.04,
+                            color: Colors.orange,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
                         Text(
                           longdescription,
                           style: TextStyle(
