@@ -214,6 +214,7 @@ var universityGraduationYearController=TextEditingController();
 var universityInfoController = TextEditingController();
 
 var c_workExperienceController=TextEditingController();
+
 ///company inf form
 var companyNameController = TextEditingController();
 var companyLocationController = TextEditingController();

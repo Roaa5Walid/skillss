@@ -19,6 +19,7 @@ class _UniversityState extends State<University> {
   String status = "";
   io.File? imageFile;
   final imagepicked = ImagePicker();
+<<<<<<< HEAD
   PickedFile? _imageFile;
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
@@ -37,6 +38,17 @@ class _UniversityState extends State<University> {
     } catch (e) {
       print('Error picking image: $e');
     }
+=======
+
+  uploadImage() async {
+    var pickedimage = await imagepicked.getImage(source: ImageSource.camera);
+    if (pickedimage != null) {
+      setState(() {
+        pickerImage = pickedimage;
+        imageFile = io.File(pickedimage.path);
+      });
+    } else {}
+>>>>>>> origin/master
   }
 
   void _showSuccessDialog() {

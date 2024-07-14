@@ -61,8 +61,26 @@ appBar: AppBar(
 
             ],
           ),
+
+
+  )
+),
+      /*
+       Text('تواصل معناا',style:TextStyle(fontSize: MediaQuery.of(context).size.width * 0.06,color: Colors.orange,fontFamily: "Cairo"),
+  ),
+      body: Center(
+        child: ListView(
+          children: [
+            IconButton(onPressed: () {email();}, icon: const Icon(Icons.email_outlined,color: Color(0xff041038),size: 30,),),
+            IconButton(onPressed: () { whatsapp();}, icon: const Icon(Icons.phone,color: Color(0xff041038),size: 30,),),
+            IconButton(onPressed: () {sms();}, icon: const Icon(Icons.email,color: Color(0xff041038),size: 30,),),
+            IconButton(onPressed: () { whatsapp();}, icon: const Icon(Icons.phone,color: Color(0xff041038),size: 30,),),
+
+          ],
         ),
       ),
+
+       */
     );
   }
   calling()async{
@@ -181,5 +199,6 @@ await launchUrlString(url);
       ),
     );
   }
+
 
 }
